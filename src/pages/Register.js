@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import logo from "../img/MyWallet.png";
 
 export default function Register() {
@@ -12,7 +13,9 @@ export default function Register() {
         <input />
         <button>Cadastrar</button>
       </Form>
-      <Link to={`/`}>Já tem uma conta? Entre agora!</Link>
+      <Link to={`/`}>
+        <LinkTo>Já tem uma conta? Entre agora!</LinkTo>
+      </Link>
     </Container>
   );
 }
@@ -55,6 +58,6 @@ const Form = styled.form`
   }
 `;
 
-const Link = styled.h1`
+const LinkTo = styled.h1`
   margin-top: 36px;
 `;

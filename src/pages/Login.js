@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import logo from '../img/MyWallet.png'
+import { Link } from "react-router-dom";
+import logo from "../img/MyWallet.png";
 
 export default function Login() {
   return (
@@ -10,7 +11,9 @@ export default function Login() {
         <input />
         <button>Entrar</button>
       </Form>
-      <Link to={`/Register`}>Primeira vez? Cadastre-se!</Link>
+      <Link to={`/Register`}>
+        <LinkTo>Primeira vez? Cadastre-se!</LinkTo>
+      </Link>
     </Container>
   );
 }
@@ -28,7 +31,7 @@ const Container = styled.div`
 const Logo = styled.img`
   width: 147px;
   margin-bottom: 24px;
-`
+`;
 
 const Form = styled.form`
   width: 326px;
@@ -53,6 +56,6 @@ const Form = styled.form`
   }
 `;
 
-const Link = styled.h1`
+const LinkTo = styled.h1`
   margin-top: 36px;
 `;
