@@ -1,16 +1,73 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import logo from "../img/MyWallet.png";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function Register() {
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [checkPassword, setCheckPassword] = useState("");
+
+  const navigate = useNavigate();
+
+  function handleSignUp(e) {
+    e.preventDefault();
+
+    const URL = "http://localhost:5000/register";
+    const body = {
+      username,
+      email,
+      password,
+      checkPassword,
+    };
+
+    const request = axios.post(URL, body);
+
+    request
+      .then((ans) => {
+        console.log(ans.data);
+        navigate("/");
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+      });
+  }
+
   return (
     <Container>
       <Logo src={logo} alt="logo" />
-      <Form>
-        <input />
-        <input />
-        <input />
-        <input />
+      <Form onSubmit={handleSignUp}>
+        <input
+          type="text"
+          placeholder="Nome"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+        />
+        <input
+          type="text"
+          placeholder="E-mail"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        <input
+          type="text"
+          placeholder="Senha"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+        <input
+          type="text"
+          placeholder="Confirme sua senha"
+          value={checkPassword}
+          onChange={(e) => setCheckPassword(e.target.value)}
+          required
+        />
         <button>Cadastrar</button>
       </Form>
       <Link to={`/`}>

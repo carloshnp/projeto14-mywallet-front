@@ -1,17 +1,68 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../img/MyWallet.png";
+import { useState } from "react";
+import { useUserContext } from "../context/UserContext";
+import axios from "axios";
 
 export default function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const navigate = useNavigate();
+
+  const { setBearer, setUser } = useUserContext();
+
+  function handleSignIn(e) {
+    e.preventDefault();
+
+    const URL = "http://localhost:5000/";
+    const body = {
+      email,
+      password,
+    };
+
+    const request = axios.post(URL, body);
+
+    request
+      .then((ans) => {
+        console.log(ans.data);
+        const newBearer = `Bearer ${ans.data.token}`;
+
+        setBearer(newBearer);
+        localStorage.setItem("token", JSON.stringify(newBearer));
+
+        setUser(ans.data.username);
+        localStorage.setItem("user", JSON.stringify(ans.data.user));
+
+        navigate("/finances");
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+      });
+  }
+
   return (
     <Container>
       <Logo src={logo} alt="logo" />
-      <Form>
-        <input />
-        <input />
-        <button>Entrar</button>
+      <Form onSubmit={handleSignIn}>
+        <input
+          type="email"
+          placeholder="E-mail"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        <input
+          type="password"
+          placeholder="Senha"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+        <button type="submit">Entrar</button>
       </Form>
-      <Link to={`/Register`}>
+      <Link to={`/register`}>
         <LinkTo>Primeira vez? Cadastre-se!</LinkTo>
       </Link>
     </Container>
