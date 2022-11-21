@@ -55,14 +55,14 @@ export default function Register() {
           required
         />
         <input
-          type="text"
+          type="password"
           placeholder="Senha"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
         />
         <input
-          type="text"
+          type="password"
           placeholder="Confirme sua senha"
           value={checkPassword}
           onChange={(e) => setCheckPassword(e.target.value)}
