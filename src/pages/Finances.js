@@ -1,13 +1,23 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import RegisterTable from "../components/RegisterTable";
+import { useUserContext } from "../context/UserContext";
 
 export default function Finances() {
+  const { user, bearer } = useUserContext();
+  const navigate = useNavigate();
+
+  if (!user && !bearer) {
+    return navigate("/");
+  }
+
   return (
     <Container>
       <HeaderContainer>
-        <h1>Olá, Fulano</h1>
+        <h1>Olá, {user}</h1>
         <Logout></Logout>
       </HeaderContainer>
-      <Register>Não há registros de entrada ou saída</Register>
+      <RegisterTable />
       <CashierContainer>
         <NewInflow>Inflow</NewInflow>
         <NewOutflow>Outflow</NewOutflow>
@@ -35,22 +45,13 @@ const CashierContainer = styled.div`
 
 const Logout = styled.div``;
 
-const Register = styled.div`
-  width: 100%;
-  height: 100%;
-  margin-top: 22px;
-  margin-bottom: 13px;
-  border: 0;
-  border-radius: 5px;
-  background-color: #FFFFFF;
-`;
 
 const NewInflow = styled.button`
   width: 155px;
   height: 114px;
   border: 0;
   border-radius: 5px;
-  background-color: #A328D6;
+  background-color: #a328d6;
 `;
 
 const NewOutflow = styled.button`
@@ -58,5 +59,5 @@ const NewOutflow = styled.button`
   height: 114px;
   border: 0;
   border-radius: 5px;
-  background-color: #A328D6;
+  background-color: #a328d6;
 `;
