@@ -11,7 +11,13 @@ export default function Login() {
 
   const navigate = useNavigate();
 
-  const { setBearer, setUser } = useUserContext();
+  const { setBearer, setUser, refresh, setRefresh } = useUserContext();
+
+  const userStorage = localStorage.getItem("user");
+  if (userStorage) {
+    setRefresh(!refresh)
+    navigate("/finances");
+  }
 
   function handleSignIn(e) {
     e.preventDefault();
@@ -28,12 +34,15 @@ export default function Login() {
       .then((ans) => {
         console.log(ans.data);
         const newBearer = `Bearer ${ans.data.token}`;
+        const newUser = ans.data.username
 
         setBearer(newBearer);
         localStorage.setItem("token", JSON.stringify(newBearer));
 
-        setUser(ans.data.username);
+        setUser(newUser);
         localStorage.setItem("user", JSON.stringify(ans.data.user));
+
+        setRefresh(!refresh)
 
         navigate("/finances");
       })

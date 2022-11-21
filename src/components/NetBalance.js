@@ -34,12 +34,12 @@ const Container = styled.div`
   margin-top: 5px;
   display: flex;
   justify-content: space-between;
-  align-self: end;
+  align-self: flex-end;
   font-size: 17px;
   background-color: #ffffff;
 
   h1 {
-    font-weigth: 700;
+    font-weight: 700;
     color: #000000;
   }
 

@@ -15,8 +15,10 @@ const UserContextProvider = ({ children }) => {
       : undefined
   );
 
+  const [refresh, setRefresh] = useState(true);
+
   return (
-    <UserContext.Provider value={{ user, setUser, bearer, setBearer }}>
+    <UserContext.Provider value={{ user, setUser, bearer, setBearer, refresh, setRefresh }}>
       {children}
     </UserContext.Provider>
   );

@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import RegisterTable from "../components/RegisterTable";
@@ -11,16 +12,31 @@ export default function Finances() {
     return navigate("/");
   }
 
+  function signOut() {
+    localStorage.clear();
+    navigate("/");
+  }
+
   return (
     <Container>
       <HeaderContainer>
         <h1>Olá, {user}</h1>
-        <Logout></Logout>
+        <ion-icon name="exit-outline" onClick={signOut}></ion-icon>
       </HeaderContainer>
       <RegisterTable />
       <CashierContainer>
-        <NewInflow>Inflow</NewInflow>
-        <NewOutflow>Outflow</NewOutflow>
+        <OperationButton
+          onClick={() => navigate("/operation", { state: { type: "inflow" } })}
+        >
+          <ion-icon name="add-circle-outline"></ion-icon>
+          <h2>Nova entrada</h2>
+        </OperationButton>
+        <OperationButton
+          onClick={() => navigate("/operation", { state: { type: "outflow" } })}
+        >
+          <ion-icon name="remove-circle-outline"></ion-icon>
+          <h2>Nova saída</h2>
+        </OperationButton>
       </CashierContainer>
     </Container>
   );
@@ -32,10 +48,22 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   background-color: #8c11be;
+  font-family: "Raleway", sans-serif;
+  color: #ffffff;
 `;
 
 const HeaderContainer = styled.div`
   display: flex;
+  justify-content: space-between;
+  font-weight: 700;
+
+  h1 {
+    font-size: 26px;
+  }
+
+  ion-icon {
+    font-size: 24px;
+  }
 `;
 
 const CashierContainer = styled.div`
@@ -43,21 +71,26 @@ const CashierContainer = styled.div`
   justify-content: space-between;
 `;
 
-const Logout = styled.div``;
-
-
-const NewInflow = styled.button`
+const OperationButton = styled.button`
   width: 155px;
   height: 114px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
   border: 0;
   border-radius: 5px;
   background-color: #a328d6;
-`;
+  color: #ffffff;
 
-const NewOutflow = styled.button`
-  width: 155px;
-  height: 114px;
-  border: 0;
-  border-radius: 5px;
-  background-color: #a328d6;
+  ion-icon {
+    font-size: 25px;
+  }
+
+  h2 {
+    font-weight: 700;
+    font-size: 17px;
+    width: 64px;
+  }
 `;
